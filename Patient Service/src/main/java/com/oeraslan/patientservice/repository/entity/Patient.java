@@ -37,7 +37,7 @@ public class Patient {
     @ElementCollection
     private List<String> names;
 
-    private String lastName;
+    private String surname;
 
     private String notificationPreference;
 

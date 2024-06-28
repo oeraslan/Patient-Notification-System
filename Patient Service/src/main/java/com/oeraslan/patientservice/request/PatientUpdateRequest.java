@@ -14,7 +14,7 @@ public class PatientUpdateRequest {
 
     private Long id;
     private List<String> names;
-    private String lastName;
+    private String surName;
     private String notificationPreference;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date birthdate;

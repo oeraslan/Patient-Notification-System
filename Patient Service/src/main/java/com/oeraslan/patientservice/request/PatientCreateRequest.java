@@ -13,7 +13,7 @@ import java.util.Set;
 public class PatientCreateRequest {
 
     private List<String> names;
-    private String lastName;
+    private String surname;
     private String notificationPreference;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date birthdate;
