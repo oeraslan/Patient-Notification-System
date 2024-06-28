@@ -3,6 +3,7 @@ package com.oeraslan.patientservice.request;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.oeraslan.patientservice.repository.entity.Contact;
 import com.oeraslan.patientservice.repository.entity.Identifier;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,7 +13,6 @@ import java.util.Set;
 @Data
 public class PatientUpdateRequest {
 
-    private Long id;
     private List<String> names;
     private String surName;
     private String notificationPreference;
