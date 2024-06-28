@@ -10,6 +10,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,6 +39,8 @@ public class Patient {
 
     private String lastName;
 
+    private String notificationPreference;
+
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date birthdate;
 
@@ -47,5 +51,17 @@ public class Patient {
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Identifier> identifiers = new HashSet<>();
+
+    @Builder.Default
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private Date patientCreatedDate = new Date();
+
+    @Builder.Default
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private Date patientUpdatedDate = new Date();
+
+    private boolean deleted;
 
 }
