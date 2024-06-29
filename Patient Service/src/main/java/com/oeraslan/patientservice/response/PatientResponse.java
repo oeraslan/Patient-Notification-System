@@ -1,8 +1,7 @@
 package com.oeraslan.patientservice.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.oeraslan.patientservice.repository.entity.Contact;
-import com.oeraslan.patientservice.repository.entity.Identifier;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -21,7 +20,7 @@ public class PatientResponse {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date birthdate;
     private String gender;
-    private Set<Contact> contacts;
-    private Set<Identifier> identifiers;
+    private Set<ContactResponse> contacts;
+    private Set<IdentifierResponse> identifiers;
 
 }

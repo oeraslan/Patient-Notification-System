@@ -51,7 +51,7 @@ public class PatientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PatientResponse> getPatientById(@PathVariable Long id) {
+    public ResponseEntity<Object> getPatientById(@PathVariable Long id) {
         log.debug("[{}][getPatientById] -> request id: {}", this.getClass().getSimpleName(), id);
         return ResponseEntity.ok().body(patientService.getPatientById(id));
     }

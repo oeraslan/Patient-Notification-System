@@ -14,13 +14,13 @@ import java.util.Set;
 public class PatientUpdateRequest {
 
     private List<String> names;
-    private String surName;
+    private String surname;
     private String notificationPreference;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date birthdate;
     private String gender;
-    private Set<Contact> contacts;
-    private Set<Identifier> identifiers;
+    private Set<ContactUpdateRequest> contacts;
+    private Set<IdentifierUpdateRequest> identifiers;
     private boolean deleted;
 
 }

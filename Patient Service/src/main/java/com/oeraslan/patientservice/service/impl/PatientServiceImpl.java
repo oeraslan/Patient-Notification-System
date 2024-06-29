@@ -3,7 +3,11 @@ package com.oeraslan.patientservice.service.impl;
 import com.oeraslan.patientservice.exception.PatientAlreadyDeletedException;
 import com.oeraslan.patientservice.exception.PatientNotCreatedException;
 import com.oeraslan.patientservice.exception.PatientNotFoundException;
+import com.oeraslan.patientservice.repository.ContactRepository;
+import com.oeraslan.patientservice.repository.IdentifierRepository;
 import com.oeraslan.patientservice.repository.PatientRepository;
+import com.oeraslan.patientservice.repository.entity.Contact;
+import com.oeraslan.patientservice.repository.entity.Identifier;
 import com.oeraslan.patientservice.repository.entity.Patient;
 import com.oeraslan.patientservice.repository.mapper.PatientMapper;
 import com.oeraslan.patientservice.request.PatientCreateRequest;
@@ -27,6 +31,10 @@ public class PatientServiceImpl implements PatientService {
 
     private final PatientRepository patientRepository;
 
+    private final ContactRepository contactRepository;
+
+    private final IdentifierRepository identifierRepository;
+
     private final PatientMapper patientMapper;
 
     @Override
@@ -36,23 +44,33 @@ public class PatientServiceImpl implements PatientService {
         try {
             Patient patient = patientMapper.createRequestToPatient(createRequest);
             Patient patientResponse = patientRepository.save(patient);
+
+            patientResponse.setContacts(createRequest.getContacts().stream()
+                    .map(contactCreateRequest -> {
+                        Contact contact = patientMapper.createRequestToContact(contactCreateRequest, patientResponse);
+                        return contactRepository.save(contact);
+                    })
+                    .collect(Collectors.toSet()));
+            patientResponse.setIdentifiers(createRequest.getIdentifiers().stream()
+                    .map(identifierCreateRequest -> {
+                        Identifier identifier = patientMapper.createRequestToIdentifier(identifierCreateRequest, patientResponse);
+                        return identifierRepository.save(identifier);
+                    })
+                    .collect(Collectors.toSet()));
+
+            patientRepository.save(patientResponse);
             log.debug("[{}][createPatient] -> patient created: {}", this.getClass().getSimpleName(), patientResponse);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new PatientNotCreatedException(e.getMessage());
         }
 
     }
 
     @Override
-    public PatientResponse getPatientById(Long id) {
+    public PatientResponse getPatientById(Long id) throws PatientNotFoundException {
         log.debug("[{}][getPatient] -> request id: {}", this.getClass().getSimpleName(), id);
 
-        Patient patient = patientRepository.findById(id).orElseThrow(() -> new PatientNotFoundException(id));
-
-        log.debug("[{}][getPatient] -> response patient: {}", this.getClass().getSimpleName(), patient);
-
-        return patientMapper.patientToResponse(patient);
+        return patientMapper.patientToResponse(patientRepository.findById(id).orElseThrow(() -> new PatientNotFoundException(id)));
     }
 
     @Override
@@ -60,6 +78,21 @@ public class PatientServiceImpl implements PatientService {
         log.debug("[{}][updatePatient] -> request: {}", this.getClass().getSimpleName(), updateRequest);
 
         Patient patient = patientRepository.findById(id).orElseThrow(() -> new PatientNotFoundException(id));
+
+        patient.setContacts(updateRequest.getContacts().stream()
+                .map(contactUpdateRequest -> {
+                    Contact contact = contactRepository.findById(contactUpdateRequest.getId()).get();
+                    patientMapper.updateRequestToContact(contactUpdateRequest, contact);
+                    return contactRepository.save(contact);
+                })
+                .collect(Collectors.toSet()));
+        patient.setIdentifiers(updateRequest.getIdentifiers().stream()
+                .map(identifierUpdateRequest -> {
+                    Identifier identifier = identifierRepository.findById(identifierUpdateRequest.getId()).get();
+                    patientMapper.updateRequestToIdentifier(identifierUpdateRequest, identifier);
+                    return identifierRepository.save(identifier);
+                })
+                .collect(Collectors.toSet()));
 
         patientMapper.updateRequestToPatient(updateRequest, patient);
 

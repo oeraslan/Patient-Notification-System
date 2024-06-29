@@ -18,7 +18,7 @@ public class PatientCreateRequest {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date birthdate;
     private String gender;
-    private Set<Contact> contacts;
-    private Set<Identifier> identifiers;
+    private Set<ContactCreateRequest> contacts;
+    private Set<IdentifierCreateRequest> identifiers;
 
 }
