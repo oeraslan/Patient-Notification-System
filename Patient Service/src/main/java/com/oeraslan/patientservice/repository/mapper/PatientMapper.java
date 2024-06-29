@@ -4,6 +4,7 @@ import ch.qos.logback.core.util.StringUtil;
 import com.oeraslan.patientservice.repository.entity.Patient;
 import com.oeraslan.patientservice.request.PatientCreateRequest;
 import com.oeraslan.patientservice.request.PatientUpdateRequest;
+import com.oeraslan.patientservice.response.PatientResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -53,6 +54,19 @@ public class PatientMapper {
 
         patient.setPatientUpdatedDate(new Date());
 
+    }
+
+    public PatientResponse patientToResponse(Patient patient) {
+        return PatientResponse.builder()
+                .id(patient.getId())
+                .names(patient.getNames())
+                .surname(patient.getSurname())
+                .gender(patient.getGender())
+                .notificationPreference(patient.getNotificationPreference())
+                .birthdate(patient.getBirthdate())
+                .contacts(patient.getContacts())
+                .identifiers(patient.getIdentifiers())
+                .build();
     }
 
 
