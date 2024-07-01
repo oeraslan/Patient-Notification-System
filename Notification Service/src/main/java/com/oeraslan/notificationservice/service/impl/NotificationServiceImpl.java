@@ -118,12 +118,27 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     private boolean matchesCriteria(NotificationTemplate template, Patient patient) {
+        log.info("[{}][matchesCriteria] -> template: {}, patient: {}", this.getClass().getSimpleName(), template, patient);
         boolean matches = true;
-        if (template.getGenderCriteria() != null) {
+        if (ObjectUtils.isNotEmpty(template.getGenderCriteria())) {
             matches &= template.getGenderCriteria().equalsIgnoreCase(patient.getGender());
         }
-        if (template.getAgeCriteria() != null) {
-            matches &= template.getAgeCriteria() <= patient.getAge();
+        switch (template.getCondition()) {
+            case EQUAL:
+                matches &= template.getAgeCriteria().equals(patient.getAge());
+                break;
+            case GREATER:
+                matches &= template.getAgeCriteria() < patient.getAge();
+                break;
+            case LESS:
+                matches &= template.getAgeCriteria() > patient.getAge();
+                break;
+            case GREATER_EQUAL:
+                matches &= template.getAgeCriteria() <= patient.getAge();
+                break;
+            case LESS_EQUAL:
+                matches &= template.getAgeCriteria() >= patient.getAge();
+                break;
         }
         return matches;
     }
