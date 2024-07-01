@@ -3,6 +3,7 @@ package com.oeraslan.patientservice.service.impl;
 import com.oeraslan.patientservice.exception.PatientAlreadyDeletedException;
 import com.oeraslan.patientservice.exception.PatientNotCreatedException;
 import com.oeraslan.patientservice.exception.PatientNotFoundException;
+import com.oeraslan.patientservice.kafka.PatientProducer;
 import com.oeraslan.patientservice.repository.ContactRepository;
 import com.oeraslan.patientservice.repository.IdentifierRepository;
 import com.oeraslan.patientservice.repository.PatientRepository;
@@ -37,9 +38,11 @@ public class PatientServiceImpl implements PatientService {
 
     private final PatientMapper patientMapper;
 
+    private final PatientProducer patientProducer;
+
     @Override
     public void createPatient(PatientCreateRequest createRequest) {
-        log.debug("[{}][createPatient] -> request: {}", this.getClass().getSimpleName(), createRequest);
+        log.info("[{}][createPatient] -> request: {}", this.getClass().getSimpleName(), createRequest);
 
         try {
             Patient patient = patientMapper.createRequestToPatient(createRequest);
@@ -59,7 +62,8 @@ public class PatientServiceImpl implements PatientService {
                     .collect(Collectors.toSet()));
 
             patientRepository.save(patientResponse);
-            log.debug("[{}][createPatient] -> patient created: {}", this.getClass().getSimpleName(), patientResponse);
+            patientProducer.sendPatient(patientResponse);
+            log.info("[{}][createPatient] -> patient created and sent: {}", this.getClass().getSimpleName(), patientResponse);
         } catch (Exception e) {
             throw new PatientNotCreatedException(e.getMessage());
         }
