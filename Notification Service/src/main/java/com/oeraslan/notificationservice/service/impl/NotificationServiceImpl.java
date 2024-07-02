@@ -106,6 +106,8 @@ public class NotificationServiceImpl implements NotificationService {
     public void evaluateAndAddToTarget(Patient patient) {
         log.info("[{}][evaluateAndAddToTarget] -> patient: {}", this.getClass().getSimpleName(), patient);
 
+        System.out.println("patient = " + patient);
+
         List<NotificationTemplate> templates = notificationTemplateRepository.findAll();
         for (NotificationTemplate template : templates) {
             if (matchesCriteria(template, patient)) {

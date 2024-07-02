@@ -10,11 +10,16 @@ import java.util.List;
 
 public interface NotificationService {
 
-    public void createNotificationTemplate(NotificationTemplateRequest notificationTemplateRequest);
-    public NotificationTemplateResponse getNotificationTemplateById(Long id);
-    public List<NotificationTemplateResponse> getAllNotificationTemplates();
-    public void updateNotificationTemplate(Long id, NotificationTemplateUpdateRequest notificationTemplateUpdateRequest);
-    public void deleteNotificationTemplate(Long id);
-    public void evaluateAndAddToTarget(Patient patient);
+    void createNotificationTemplate(NotificationTemplateRequest notificationTemplateRequest);
+
+    NotificationTemplateResponse getNotificationTemplateById(Long id);
+
+    List<NotificationTemplateResponse> getAllNotificationTemplates();
+
+    void updateNotificationTemplate(Long id, NotificationTemplateUpdateRequest notificationTemplateUpdateRequest);
+
+    void deleteNotificationTemplate(Long id);
+
+    void evaluateAndAddToTarget(Patient patient);
 
 }

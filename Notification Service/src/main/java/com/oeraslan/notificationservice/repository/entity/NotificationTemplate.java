@@ -1,6 +1,7 @@
 package com.oeraslan.notificationservice.repository.entity;
 
 import com.oeraslan.notificationservice.enums.Condition;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +26,7 @@ public class NotificationTemplate {
 
     private String genderCriteria;
     private Integer ageCriteria;
+    @Column(name = "condition_type")
     private Condition condition;
     private String messageTemplate;
     private boolean deleted;
