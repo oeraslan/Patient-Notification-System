@@ -1,7 +1,8 @@
 package com.oeraslan.patientservice.enums;
 
 public enum NotificationPreference {
-    NONE,
+    EMAIL,
     SMS,
-    MAIL
+    PHONE,
+    NONE
 }

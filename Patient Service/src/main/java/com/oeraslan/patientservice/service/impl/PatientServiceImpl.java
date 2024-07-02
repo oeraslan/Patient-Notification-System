@@ -61,13 +61,14 @@ public class PatientServiceImpl implements PatientService {
                     })
                     .collect(Collectors.toSet()));
 
+
             patientRepository.save(patientResponse);
-            patientProducer.sendPatient(patientResponse);
+            PatientResponse kafkaResponse = patientMapper.patientToResponse(patientResponse);
+            patientProducer.sendPatient(kafkaResponse);
             log.info("[{}][createPatient] -> patient created and sent: {}", this.getClass().getSimpleName(), patientResponse);
         } catch (Exception e) {
             throw new PatientNotCreatedException(e.getMessage());
         }
-
     }
 
     @Override

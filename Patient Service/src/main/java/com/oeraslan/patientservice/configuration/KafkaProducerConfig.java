@@ -1,6 +1,7 @@
 package com.oeraslan.patientservice.configuration;
 
 import com.oeraslan.patientservice.repository.entity.Patient;
+import com.oeraslan.patientservice.response.PatientResponse;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +22,7 @@ public class KafkaProducerConfig {
     private String bootstrapServers;
 
     @Bean
-    public ProducerFactory<String, Patient> producerFactory() {
+    public ProducerFactory<String, PatientResponse> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -30,7 +31,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, Patient> kafkaTemplate() {
+    public KafkaTemplate<String, PatientResponse> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }
