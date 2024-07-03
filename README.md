@@ -26,7 +26,11 @@ Bu proje, iki mikroservisten oluşan bir hasta kayıt ve bildirim sistemidir. Bu
 - React
 - MySQL
 - PostgreSQL
+- Swagger
 
+## Swagger
+  - Patient Service : http://localhost:8080/swagger-ui.html
+  - Notification Service : http://localhost:7070/swagger-ui.html
 ## Kurulum
 
 - ### Kafka : 
