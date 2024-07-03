@@ -73,14 +73,14 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientResponse getPatientById(Long id) throws PatientNotFoundException {
-        log.debug("[{}][getPatient] -> request id: {}", this.getClass().getSimpleName(), id);
+        log.info("[{}][getPatient] -> request id: {}", this.getClass().getSimpleName(), id);
 
         return patientMapper.patientToResponse(patientRepository.findById(id).orElseThrow(() -> new PatientNotFoundException(id)));
     }
 
     @Override
     public void updatePatient(Long id, PatientUpdateRequest updateRequest) {
-        log.debug("[{}][updatePatient] -> request: {}", this.getClass().getSimpleName(), updateRequest);
+        log.info("[{}][updatePatient] -> request: {}", this.getClass().getSimpleName(), updateRequest);
 
         Patient patient = patientRepository.findById(id).orElseThrow(() -> new PatientNotFoundException(id));
 
@@ -103,12 +103,12 @@ public class PatientServiceImpl implements PatientService {
 
         Patient patientResponse = patientRepository.save(patient);
 
-        log.debug("[{}][updatePatient] -> patient updated: {}", this.getClass().getSimpleName(), patientResponse);
+        log.info("[{}][updatePatient] -> patient updated: {}", this.getClass().getSimpleName(), patientResponse);
     }
 
     @Override
     public void deletePatient(Long id) {
-        log.debug("[{}][deletePatient] -> request id: {}", this.getClass().getSimpleName(), id);
+        log.info("[{}][deletePatient] -> request id: {}", this.getClass().getSimpleName(), id);
 
         Patient patient = patientRepository.getPatientByIdAndDeletedFalse(id).orElseThrow(() -> new PatientAlreadyDeletedException(id));
 
@@ -123,7 +123,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<PatientResponse> getAllPatients() {
-        log.debug("[{}][getAllPatients] -> called", this.getClass().getSimpleName());
+        log.info("[{}][getAllPatients] -> called", this.getClass().getSimpleName());
 
         return patientRepository.findAll().stream()
                 .map(patientMapper::patientToResponse)
@@ -132,7 +132,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<PatientResponse> getPatientBySearchParameters(PatientSearchRequest searchRequest) {
-        log.debug("[{}][getPatientBySearchParameters] -> request: {}", this.getClass().getSimpleName(), searchRequest);
+        log.info("[{}][getPatientBySearchParameters] -> request: {}", this.getClass().getSimpleName(), searchRequest);
         return patientRepository.searchPatients(searchRequest.getName(), searchRequest.getSurname(), searchRequest.getGender()).stream()
                 .map(patientMapper::patientToResponse)
                 .collect(Collectors.toList());

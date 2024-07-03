@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/patient")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PatientController {
 
     private final PatientService patientService;
@@ -32,33 +34,33 @@ public class PatientController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.OK)
     public void createPatient(@RequestBody PatientCreateRequest createRequest) {
-        log.debug("[{}][createPatient] -> request: {}", this.getClass().getSimpleName(), createRequest);
+        log.info("[{}][createPatient] -> request: {}", this.getClass().getSimpleName(), createRequest);
         patientService.createPatient(createRequest);
     }
 
     @PutMapping("/{id}/update")
     @ResponseStatus(HttpStatus.OK)
     public void updatePatient(@RequestBody PatientUpdateRequest updateRequest, @PathVariable Long id) {
-        log.debug("[{}][updatePatient] -> request: {}", this.getClass().getSimpleName(), updateRequest);
+        log.info("[{}][updatePatient] -> request: {}", this.getClass().getSimpleName(), updateRequest);
         patientService.updatePatient(id, updateRequest);
     }
 
     @DeleteMapping("/{id}/delete")
     @ResponseStatus(HttpStatus.OK)
     public void deletePatient(@PathVariable Long id) {
-        log.debug("[{}][deletePatient] -> request id: {}", this.getClass().getSimpleName(), id);
+        log.info("[{}][deletePatient] -> request id: {}", this.getClass().getSimpleName(), id);
         patientService.deletePatient(id);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getPatientById(@PathVariable Long id) {
-        log.debug("[{}][getPatientById] -> request id: {}", this.getClass().getSimpleName(), id);
+        log.info("[{}][getPatientById] -> request id: {}", this.getClass().getSimpleName(), id);
         return ResponseEntity.ok().body(patientService.getPatientById(id));
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<PatientResponse>> getAllPatients() {
-        log.debug("[{}][getAllPatients] -> request all patient", this.getClass().getSimpleName());
+        log.info("[{}][getAllPatients] -> request all patient", this.getClass().getSimpleName());
         return ResponseEntity.ok().body(patientService.getAllPatients());
     }
 
