@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "61812935-76ab-4a0d-9eed-1266666f4856",
+		"name": "Patient Notification System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "13809685"
+	},
+	"item": [
+		{
+			"name": "Patient-Service",
+			"item": [
+				{
+					"name": "Get Patient By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/patient/7"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Patient",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8080/api/patient/all"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Patient By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:8080/api/patient/7/delete"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Patient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"names\": [\r\n    \"Omer\"\r\n  ],\r\n  \"surname\": \"Eraslan\",\r\n  \"notificationPreference\": \"SMS\",\r\n  \"birthdate\": \"25-09-1998\",\r\n  \"gender\": \"erkek\",\r\n  \"contacts\": [\r\n    {\r\n      \"type\": \"PHONE\",\r\n      \"value\": \"123456\"\r\n    }\r\n  ],\r\n  \"identifiers\": [\r\n    {\r\n      \"type\": \"TC\",\r\n      \"value\": \"123456\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/patient/create"
+					},
+					"response": []
+				},
+				{
+					"name": "Patient Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"names\": [\r\n    \"string\"\r\n  ],\r\n  \"surname\": \"string\",\r\n  \"notificationPreference\": \"string\",\r\n  \"birthdate\": \"2024-07-03T08:49:03.988Z\",\r\n  \"gender\": \"string\",\r\n  \"contacts\": [\r\n    {\r\n      \"id\": 0,\r\n      \"type\": \"string\",\r\n      \"value\": \"string\"\r\n    }\r\n  ],\r\n  \"identifiers\": [\r\n    {\r\n      \"id\": 0,\r\n      \"type\": \"string\",\r\n      \"value\": \"string\"\r\n    }\r\n  ],\r\n  \"deleted\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8080/api/patient/26/update"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notification-Service",
+			"item": [
+				{
+					"name": "Notification Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 0,\r\n  \"genderCriteria\": \"string\",\r\n  \"ageCriteria\": 0,\r\n  \"condition\": \"GREATER\",\r\n  \"messageTemplate\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:7070/api/notification/1/update"
+					},
+					"response": []
+				},
+				{
+					"name": "Notification Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"genderCriteria\": \"string\",\r\n  \"ageCriteria\": 0,\r\n  \"condition\": \"GREATER\",\r\n  \"messageTemplate\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:7070/api/notification/create"
+					},
+					"response": []
+				},
+				{
+					"name": "Notification Get By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:7070/api/notification/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Notification Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:7070/api/notification/all"
+					},
+					"response": []
+				},
+				{
+					"name": "Notification Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:7070/api/notification/1/delete"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
